@@ -11,11 +11,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.spike.timetracker.R
 
 
 @Composable
@@ -47,59 +49,34 @@ fun MyTasksSection() {
             ) {
                 Card(
                     modifier = Modifier
-                        .height(80.dp)
+                        .size(80.dp)
                         .padding(start = 8.dp),
                     shape = RectangleShape,
-                    elevation = 0.dp
+                    elevation = 2.dp,
+                    backgroundColor = Color.Gray
                 ) {
-               //     Image(
-                 //       painterResource(covers[index].first),
-                   //     contentDescription = "",
-                   // )
+               Image(
+                   painterResource(id = R.drawable.ic_clipboard),
+                   contentDescription = ""
+               )
                 }
-                Column(modifier = Modifier
-                    .padding(
-                        start = 16.dp,
-                        top = 4.dp,
-                        bottom = 4.dp
-                    )
-                    .weight(3f),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(text = "To Do",
-                        style = MaterialTheme.typography.h6
-                    )
-                }
+
+                Text(text = "To Do",
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.padding(start=16.dp)
+                )
                 Spacer(
                     modifier = Modifier
-                        .width(IntrinsicSize.Max)
-                        .weight(.5f)
+                        .width(IntrinsicSize.Min)
+                        .weight(.1f)
                 )
-                Column(modifier = Modifier
-                    .padding(
-                        top = 4.dp,
-                        bottom = 4.dp,
-                        end = 32.dp
-                    )
-                    .weight(1f),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    Text(text = "5 tasks",
-                        fontFamily = FontFamily.Default,
-                        style = MaterialTheme.typography.h6
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .padding(top = 20.dp)
-                    )
-                    Card(
-                        modifier = Modifier.size(24.dp),
-                        shape = CircleShape,
-                        elevation = 0.dp
-                    ) {
-                       // DrawPercentageIndicator(percentages[index])
-                    }
-                }
+                Text(text = "5 tasks",
+                    fontFamily = FontFamily.Default,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.size(100.dp)
+                )
+
+
             }
             Divider(
                 modifier = Modifier.padding(
