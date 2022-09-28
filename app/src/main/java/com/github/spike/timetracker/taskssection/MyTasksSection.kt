@@ -111,5 +111,7 @@ fun MyTasksSection() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreviewTasks() {
-    MyTasksSection()
+    TimeTrackerTheme {
+        MyTasksSection()
+    }
 }
