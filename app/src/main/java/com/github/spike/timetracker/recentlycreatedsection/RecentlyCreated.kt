@@ -4,10 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +23,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 import com.github.spike.timetracker.R
+
+
+val tasks = arrayOf("Mobile App", "Web", "Email")
+val dates = arrayOf("2 Sep", "8 Oct", "10 Dec")
+val priorities= arrayOf("High Priority", "Low Priority", "Low Priority")
+val colors=arrayOf(0xFFFEEDDE, 0xFFE0F6FD, 0xFFF3FD7F)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -49,10 +58,10 @@ fun RecentlyCreatedSection() {
 
                 }
             ) {
-                // Image(
-                // painterResource(R.drawable.ic_right_arrow),
-                // contentDescription = "",
-                //  )
+                Image (
+                    Icons.Default.KeyboardArrowRight,
+                    contentDescription = ""
+                        )
             }
         }
         LazyRow(
@@ -61,7 +70,7 @@ fun RecentlyCreatedSection() {
             modifier = Modifier.padding(start = 8.dp)
         ) {
             items(4) { currentCount ->
-                RowItem(number = currentCount)
+                RowItem(index = currentCount)
             }
         }
     }
@@ -69,24 +78,24 @@ fun RecentlyCreatedSection() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowItem(number: Int) {
+fun RowItem(index: Int) {
     Row(
-        modifier = Modifier.size(180.dp),
+        modifier = Modifier.size(200.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = Modifier.size(150.dp),
-            shape = RectangleShape,
+            modifier = Modifier.size(180.dp),
+            shape = RoundedCornerShape(8),
             elevation = 2.dp,
-            backgroundColor = Color(0xFFE0F6FD),
+            backgroundColor = Color(colors[index]),
             onClick = {
 
             }
             ) {
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly) {
-                    Text(text = "Mobile App",
+                    Text(text = tasks[index],
                         style = MaterialTheme.typography.h6,
                         modifier = Modifier.padding(start=4.dp),
                     )
@@ -97,12 +106,12 @@ fun RowItem(number: Int) {
                         contentDescription = "",
                     )
                     Text(
-                        text = "2 Sep",
+                        text = dates[index],
                         modifier = Modifier.padding(start=8.dp),
                     )
                 }
                 Text(
-                    text = "High Priority",
+                    text = priorities[index],
                     style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.padding(start=4.dp),

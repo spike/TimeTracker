@@ -99,7 +99,7 @@ fun MyTasksSection() {
 
 
             }
-            Divider(
+            Spacer(
                 modifier = Modifier.padding(
                     start = 28.dp,
                     end = 32.dp,
