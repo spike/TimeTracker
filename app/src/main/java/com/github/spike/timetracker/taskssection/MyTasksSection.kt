@@ -8,6 +8,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -72,8 +74,10 @@ fun MyTasksSection() {
                     elevation = 2.dp,
                     backgroundColor = Color(color_chips[index])
                 ) {
+
                Image(
                    painterResource(id = chip_icons[index]),
+                  // Icons.Default.Done,
                    contentDescription = ""
                )
                 }
