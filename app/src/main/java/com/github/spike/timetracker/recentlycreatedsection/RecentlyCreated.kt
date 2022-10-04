@@ -94,12 +94,14 @@ fun RowItem(index: Int) {
             }
             ) {
             Column(
-                verticalArrangement = Arrangement.SpaceEvenly) {
+                verticalArrangement = Arrangement.SpaceEvenly,
+                modifier=Modifier.padding(start=20.dp, end=30.dp)
+            ) {
                     Text(text = tasks[index],
                         style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(start=4.dp),
+                        modifier = Modifier.padding(),
                     )
-                Row() {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painterResource(R.drawable.ic_clock),
                         modifier = Modifier.size(20.dp),
@@ -113,8 +115,8 @@ fun RowItem(index: Int) {
                 Text(
                     text = priorities[index],
                     style = MaterialTheme.typography.body2,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(start=4.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(),
                 )
             }
         }
