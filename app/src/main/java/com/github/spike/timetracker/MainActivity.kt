@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 import com.github.spike.timetracker.R
+import com.github.spike.timetracker.graph.CurvedChart
+import com.github.spike.timetracker.graph.DrawGraph
 import com.github.spike.timetracker.recentlycreatedsection.RecentlyCreatedSection
 import com.github.spike.timetracker.taskssection.MyTasksSection
 
@@ -49,9 +51,15 @@ fun ScaffoldLayout() {
             )
         },
         content = {
-            Column() {
+            Column {
                 MyTasksSection()
                 RecentlyCreatedSection()
+              //  DrawCubic()
+//                val dailyData = arrayOf(2, 2, 3, 2, 2, 5, 5)
+//                Column() {
+//                    DrawGraph(dailyData)
+//                    CurvedChart()
+//                }
             }
         },
         bottomBar = {

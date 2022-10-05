@@ -1,32 +1,23 @@
 package com.github.spike.timetracker.graph
 
-import android.graphics.RectF
-import android.graphics.Typeface
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Slider
+import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
-import kotlinx.coroutines.CoroutineStart
-import kotlin.math.roundToInt
 
 @Composable
 fun DrawGraph(dailyData: Array<Int>) {
@@ -39,8 +30,8 @@ fun DrawGraph(dailyData: Array<Int>) {
     ) {
         Canvas(
             modifier = Modifier
-                .padding(0.dp)
-                .height(296.dp)
+                .padding(8.dp)
+                .height(280.dp)
                 .fillMaxWidth(1f)
                 .graphicsLayer { // call this function to apply custom shadow elevation, otherwise use `clip()`
                     //  shadowElevation = 45f
@@ -58,8 +49,9 @@ fun DrawGraph(dailyData: Array<Int>) {
             }
             max += 1
             var selected = 3
-            val width = 300.dp.toPx()
-            val height = 300.dp.toPx()
+           // val width = 300.dp.toPx()
+            val width = this.size.width
+            val height = this.size.height
             val intervalWidth = width / 5f
             val intervalHeight = height / max
             for (i in 1..dailyData.lastIndex) {
@@ -76,18 +68,24 @@ fun DrawGraph(dailyData: Array<Int>) {
                 )
                 if (selected == i) {
 
-                    val intervals = floatArrayOf(20f, 30f)
+                    val intervals = floatArrayOf(8.dp.toPx(), 10.dp.toPx())
                     drawLine(
                         color = Color.DarkGray,
-                        pathEffect= PathEffect.dashPathEffect(intervals, 8f),
+                        pathEffect= PathEffect.dashPathEffect(intervals, 4.dp.toPx()),
                         start = Offset(x1, 0f),
                         end = Offset(x1, height),
                         strokeWidth= 1.dp.toPx()
                     )
-                    drawCircle(
+//                    drawCircle(
+//                        color = mainCurveColorDarker,
+//                        center = Offset(x1, y1),
+//                        radius = 5.dp.toPx(),
+//                    )
+                    drawRoundRect(
+                        topLeft = Offset(x1-5.dp.toPx(), y1-5.dp.toPx()),
                         color = mainCurveColorDarker,
-                        center = Offset(x1, y1),
-                        radius = 5.dp.toPx(),
+                        size = Size(width = 10.dp.toPx(), 10.dp.toPx())
+//                    cornerRadius = CornerRadius(8f, 8f)
                     )
                     drawRect(
                         topLeft = Offset(x1-30.dp.toPx(), y1-70.dp.toPx()),
@@ -95,21 +93,89 @@ fun DrawGraph(dailyData: Array<Int>) {
                         size = Size(width = 80.dp.toPx(), 30.dp.toPx())
 //                    cornerRadius = CornerRadius(8f, 8f)
                     )
+                    this.drawContext.canvas.nativeCanvas.apply {
+                        drawText(
+                            "3 Tasks",
+                            x1-18.dp.toPx(),
+                            y1-48.dp.toPx(),
+                            android.graphics.Paint()
+                                .apply {
+                                    this.color = android.graphics.Color.WHITE
+                                    this.textSize = 18.dp.toPx()
+                                }
+                        )
+                    }
                 }
             }
-
         }
     }
 }
+@Composable
+fun DailyRow(
+    modifier: Modifier = Modifier,
+    verticalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    horizontalArrangement: Arrangement.HorizontalOrVertical = Arrangement.SpaceEvenly
+) {
+    val spacerSize = 10.dp
+    val buttonSize = 40.dp
+    Row() {
+        Spacer(modifier = Modifier.size(80.dp))
+        Card(border= BorderStroke(2.dp,Color.DarkGray),
+            modifier = Modifier.size(40.dp).align(
+                Alignment.CenterVertically
+            ),
 
+            ) {
+            Text("  Mo")
+        }
+        Spacer(modifier = Modifier.size(spacerSize))
+        Card(border= BorderStroke(2.dp,Color.DarkGray),
+            modifier = Modifier.size(40.dp).align(
+                Alignment.CenterVertically
+            ),
+
+            ) {
+            Text("  Tu")
+        }
+        Spacer(modifier = Modifier.size(spacerSize))
+        Card(border= BorderStroke(2.dp,Color.DarkGray),
+            modifier = Modifier.size(40.dp).align(
+                Alignment.CenterVertically
+            ),
+
+        ) {
+            Text("  We")
+        }
+        Spacer(modifier = Modifier.size(spacerSize))
+        Card(border= BorderStroke(2.dp,Color.DarkGray),
+            modifier = Modifier.size(40.dp).align(
+                Alignment.CenterVertically
+            ),
+
+            ) {
+            Text("  Th")
+        }
+        Spacer(modifier = Modifier.size(spacerSize))
+        Card(border= BorderStroke(2.dp,Color.DarkGray),
+            modifier = Modifier.size(40.dp).align(
+                Alignment.CenterVertically
+            ),
+
+            ) {
+            Text("  Fr")
+        }
+        Spacer(modifier = Modifier.size(spacerSize))
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreviewIndicator() {
-    val dailyData = arrayOf(2, 2, 3, 2, 2, 5, 5)
+    val dailyData = arrayOf(2, 2, 3, 2, 2, 4, 5)
     TimeTrackerTheme {
         // DrawCubic()
-        Column() {
+        Column {
             DrawGraph(dailyData)
+            DailyRow()
             CurvedChart()
         }
     }
@@ -120,11 +186,14 @@ fun DefaultPreviewIndicator() {
 fun CurvedChart(
     modifier: Modifier = Modifier,
     yPoints: List<Float> = listOf(
-        199f, 52f, 193f, 290f, 150f, 445f
+        410f, 300f, 375f, 380f, 180f
+    ),
+    yPointsMovingAverage: List<Float> = listOf(
+        500f, 390f, 380f, 320f, 100f
     ),
 ) {
 
-    val spacing = 100f
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -136,8 +205,8 @@ fun CurvedChart(
                 .fillMaxWidth()
                 .height(200.dp)
         ) {
-
-            val spacePerHour = (size.width - spacing) / yPoints.size
+            val spacing = this.size.width / yPoints.size
+            val dayInterval = (size.width - spacing) / yPoints.size
 
             val normX = mutableListOf<Float>()
             val normY = mutableListOf<Float>()
@@ -146,21 +215,18 @@ fun CurvedChart(
 
                 for (i in yPoints.indices) {
 
-                    val currentX = spacing + i * spacePerHour
+                    val currentX = spacing + i * dayInterval
 
                     if (i == 0) {
 
                         moveTo(currentX, yPoints[i])
                     } else {
 
-                        val previousX = spacing + (i - 1) * spacePerHour
-
+                        val previousX = spacing + (i - 1) * dayInterval
                         val conX1 = (previousX + currentX) / 2f
                         val conX2 = (previousX + currentX) / 2f
-
                         val conY1 = yPoints[i - 1]
                         val conY2 = yPoints[i]
-
 
                         cubicTo(
                             x1 = conX1,
@@ -179,6 +245,45 @@ fun CurvedChart(
                 }
             }
 
+            val strokePathDottedLine = Path().apply {
+
+                for (i in yPoints.indices) {
+
+                    val currentX = spacing + i * dayInterval
+
+                    if (i == 0) {
+
+                        moveTo(currentX, yPointsMovingAverage[i])
+                    } else {
+                        val previousX = spacing + (i - 1) * dayInterval
+                        val conX1 = (previousX + currentX) / 2f
+                        val conX2 = (previousX + currentX) / 2f
+                        val conY1 = yPointsMovingAverage[i - 1]
+                        val conY2 = yPointsMovingAverage[i]
+
+                        cubicTo(
+                            x1 = conX1,
+                            y1 = conY1,
+                            x2 = conX2,
+                            y2 = conY2,
+                            x3 = currentX,
+                            y3 = yPointsMovingAverage[i]
+                        )
+                    }
+                }
+            }
+
+            val intervals = floatArrayOf(20f, 30f)
+            drawPath(
+                path = strokePathDottedLine,
+                color = Color.Gray,
+                style = Stroke(
+                    width = 2.dp.toPx(),
+                    cap = StrokeCap.Round,
+                    pathEffect= PathEffect.dashPathEffect(intervals, 8f),
+
+                    )
+            )
 
             drawPath(
                 path = strokePath,
