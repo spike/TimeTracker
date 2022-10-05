@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -67,41 +68,44 @@ fun DrawGraph(dailyData: Array<Int>) {
                     strokeWidth = 4.dp.toPx()
                 )
                 if (selected == i) {
-
+                    val topLeftY = y1-70.dp.toPx()
                     val intervals = floatArrayOf(8.dp.toPx(), 10.dp.toPx())
                     drawLine(
                         color = Color.DarkGray,
                         pathEffect= PathEffect.dashPathEffect(intervals, 4.dp.toPx()),
-                        start = Offset(x1, 0f),
+                        start = Offset(x1, topLeftY),
                         end = Offset(x1, height),
                         strokeWidth= 1.dp.toPx()
                     )
-//                    drawCircle(
-//                        color = mainCurveColorDarker,
-//                        center = Offset(x1, y1),
-//                        radius = 5.dp.toPx(),
-//                    )
                     drawRoundRect(
                         topLeft = Offset(x1-5.dp.toPx(), y1-5.dp.toPx()),
                         color = mainCurveColorDarker,
                         size = Size(width = 10.dp.toPx(), 10.dp.toPx())
 //                    cornerRadius = CornerRadius(8f, 8f)
                     )
-                    drawRect(
-                        topLeft = Offset(x1-30.dp.toPx(), y1-70.dp.toPx()),
+
+                    drawRoundRect(
+                        topLeft = Offset(x1-30.dp.toPx(), topLeftY),
                         color = Color.Black,
-                        size = Size(width = 80.dp.toPx(), 30.dp.toPx())
-//                    cornerRadius = CornerRadius(8f, 8f)
+                        size = Size(width = 80.dp.toPx(), 30.dp.toPx()),
+                        cornerRadius = CornerRadius(4f, 4f)
                     )
                     this.drawContext.canvas.nativeCanvas.apply {
+                        val textX = x1-12.dp.toPx()
+                        val textY = y1-48.dp.toPx()
+                        drawCircle(
+                            radius = 7f,
+                            center = Offset(textX-8.dp.toPx(), textY-5.dp.toPx()),
+                            color = Color.Yellow
+                        )
                         drawText(
                             "3 Tasks",
-                            x1-18.dp.toPx(),
-                            y1-48.dp.toPx(),
+                            textX,
+                            textY,
                             android.graphics.Paint()
                                 .apply {
                                     this.color = android.graphics.Color.WHITE
-                                    this.textSize = 18.dp.toPx()
+                                    this.textSize = 16.dp.toPx()
                                 }
                         )
                     }
@@ -117,54 +121,42 @@ fun DailyRow(
     horizontalArrangement: Arrangement.HorizontalOrVertical = Arrangement.SpaceEvenly
 ) {
     val spacerSize = 10.dp
-    val buttonSize = 40.dp
+    val buttonModifier = modifier.size(40.dp)
+    val buttonBorder = BorderStroke(1.dp,Color.Gray)
+    val spacerModifier = Modifier.size(spacerSize)
+
     Row() {
         Spacer(modifier = Modifier.size(80.dp))
-        Card(border= BorderStroke(2.dp,Color.DarkGray),
-            modifier = Modifier.size(40.dp).align(
-                Alignment.CenterVertically
-            ),
-
+        Card(border= buttonBorder,
+            modifier = buttonModifier.align(Alignment.CenterVertically)
             ) {
             Text("  Mo")
         }
-        Spacer(modifier = Modifier.size(spacerSize))
-        Card(border= BorderStroke(2.dp,Color.DarkGray),
-            modifier = Modifier.size(40.dp).align(
-                Alignment.CenterVertically
-            ),
-
-            ) {
+        Spacer(modifier = spacerModifier)
+        Card(border= buttonBorder,
+            modifier = buttonModifier.align(Alignment.CenterVertically)
+        ) {
             Text("  Tu")
         }
-        Spacer(modifier = Modifier.size(spacerSize))
-        Card(border= BorderStroke(2.dp,Color.DarkGray),
-            modifier = Modifier.size(40.dp).align(
-                Alignment.CenterVertically
-            ),
-
+        Spacer(modifier = spacerModifier)
+        Card(border= buttonBorder,
+            modifier = buttonModifier.align(Alignment.CenterVertically)
         ) {
             Text("  We")
         }
-        Spacer(modifier = Modifier.size(spacerSize))
-        Card(border= BorderStroke(2.dp,Color.DarkGray),
-            modifier = Modifier.size(40.dp).align(
-                Alignment.CenterVertically
-            ),
-
-            ) {
+        Spacer(modifier = spacerModifier)
+        Card(border= buttonBorder,
+            modifier = buttonModifier.align(Alignment.CenterVertically)
+        ) {
             Text("  Th")
         }
-        Spacer(modifier = Modifier.size(spacerSize))
-        Card(border= BorderStroke(2.dp,Color.DarkGray),
-            modifier = Modifier.size(40.dp).align(
-                Alignment.CenterVertically
-            ),
-
-            ) {
+        Spacer(modifier = spacerModifier)
+        Card(border= buttonBorder,
+            modifier = buttonModifier.align(Alignment.CenterVertically)
+        ) {
             Text("  Fr")
         }
-        Spacer(modifier = Modifier.size(spacerSize))
+        Spacer(modifier = spacerModifier)
     }
 }
 @Preview(showBackground = true)
