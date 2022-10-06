@@ -163,29 +163,33 @@ fun DefaultPreviewIndicator() {
     TimeTrackerTheme {
         // DrawCubic()
         Column {
-            DrawGraph(dailyData)
-            DailyRow()
+          //  DrawGraph(dailyData)
+          //  DailyRow()
             CurvedChart()
             DailyRow()
         }
     }
 }
+// turn (2, 2, 3, 2, 2, 4, 5) into 200f, 200f, 300f, 200f, 200f, 400f, 500f
+// yPoints
+// dailyTasks
 
-// code from https://stackoverflow.com/a/73107907/320111
+
 @Composable
 fun CurvedChart(
     modifier: Modifier = Modifier,
     //(2, 2, 3, 2, 2, 4, 5)
     yPoints: List<Float> = listOf(
-        200f, 200f, 300f, 200f, 200f, 400f, 500f
+        300f, 300f, 200f, 300f, 300f, 100f, 100f
         // 410f, 300f, 375f, 380f, 180f
     ),
     yPointsMovingAverage: List<Float> = listOf(
-        200f, 200f, 300f, 200f, 400f, 200f, 100f
+        400f, 400f, 300f, 200f, 100f, 100f, 100f
        // 500f, 390f, 380f, 320f, 100f
     ),
 ) {
-
+    var labelX = 0f
+    var labelY = 0f
 
     Box(
         modifier = Modifier
@@ -193,7 +197,6 @@ fun CurvedChart(
             .height(IntrinsicSize.Min)
           //  .padding(all = 0.dp)
     ){
-
         Canvas(
             modifier = modifier
                 .fillMaxWidth()
@@ -228,20 +231,65 @@ fun CurvedChart(
                     }
                     val selected = 2
                     if (i == selected) {
+                        val previousX = spacing + (i - 1) * dayInterval
+                        val x1 = (previousX + currentX) / 2f
+                        val x2 = (previousX + currentX) / 2f
+                        val y1 = yPoints[i - 1]
+                        val y2 = yPoints[i]
                         normX.add(currentX)
                         normY.add(yPoints[i])
+                        val topLeftY = y2-70.dp.toPx()
                         val intervals = floatArrayOf(20f, 30f)
                         drawLine(
                             color = Color.DarkGray,
                             pathEffect= PathEffect.dashPathEffect(intervals, 4.dp.toPx()),
-                            start = Offset(currentX, 0f),
+                            start = Offset(currentX, topLeftY),
                             end = Offset(currentX, height),
                             strokeWidth= 1.dp.toPx()
                         )
-                    }
-                }
-            }
+                        val mainCurveColor = Color(0xFFFDC698)
+                        val mainCurveColorDarker = Color(0xFFEEBD94)
 
+                      //  val intervals = floatArrayOf(8.dp.toPx(), 10.dp.toPx())
+                        drawRoundRect(
+                            topLeft = Offset(currentX-5.dp.toPx(), y2-5.dp.toPx()),
+                            color = mainCurveColorDarker,
+                            size = Size(width = 10.dp.toPx(), 10.dp.toPx()),
+//                    cornerRadius = CornerRadius(8f, 8f)
+                        )
+                        drawRoundRect(
+                            topLeft = Offset(currentX-30.dp.toPx(), topLeftY),
+                            color = Color.Black,
+                            size = Size(width = 80.dp.toPx(), 30.dp.toPx()),
+                            cornerRadius = CornerRadius(4f, 4f)
+                        )
+                        labelX = currentX-30.dp.toPx()
+                        labelY = topLeftY
+
+                    }
+
+                }
+
+            }
+            this.drawContext.canvas.nativeCanvas.apply {
+                val textX = labelX-12.dp.toPx()
+                val textY = labelY-48.dp.toPx()
+                drawCircle(
+                    radius = 7f,
+                    center = Offset(textX-8.dp.toPx(), textY-5.dp.toPx()),
+                    color = Color.Yellow
+                )
+                drawText(
+                    "3 Tasks",
+                    textX,
+                    textY,
+                    android.graphics.Paint()
+                        .apply {
+                            this.color = android.graphics.Color.RED
+                            this.textSize = 16.dp.toPx()
+                        }
+                )
+            }
             val strokePathDottedLine = Path().apply {
 
                 for (i in yPoints.indices) {
@@ -299,6 +347,7 @@ fun CurvedChart(
                     center = Offset(normX[it], normY[it])
                 )
             }
+
         }
     }
 }
