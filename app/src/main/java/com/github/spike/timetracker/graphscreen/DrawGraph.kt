@@ -39,8 +39,6 @@ fun DrawGraph(dailyData: Array<Int>) {
                     shape = roundedCornerShape
                 },
         ) {
-         //   val mainCurveColor = Color(0xFFFDC698)
-         //   val mainCurveColor = Color(0x99FDC698)
             val mainCurveColor = Color(0xFFFDC698)
             val mainCurveColorDarker = Color(0xFFEEBD94)
             val movingAverageCurveColor = Color.Black
@@ -119,7 +117,7 @@ fun DrawGraph(dailyData: Array<Int>) {
 fun DailyRow(
     modifier: Modifier = Modifier
 ) {
-    val spacerSize = 10.dp
+    val spacerSize = 16.dp
     val buttonModifier = modifier.size(40.dp)
     val buttonBorder = BorderStroke(1.dp,Color.Gray)
     val spacerModifier = Modifier.size(spacerSize)
@@ -127,7 +125,7 @@ fun DailyRow(
     val daySelected = 1
 
     Row() {
-        Spacer(modifier = Modifier.size(80.dp))
+        Spacer(modifier = Modifier.size(74.dp))
         for (i in days.indices) {
             var textColor = Color.Black
             var backColor = Color.White
@@ -179,11 +177,9 @@ fun CurvedChart(
     //(2, 2, 3, 2, 2, 4, 5)
     yPoints: List<Float> = listOf(
         300f, 300f, 200f, 300f, 300f, 100f, 100f
-        // 410f, 300f, 375f, 380f, 180f
     ),
     yPointsMovingAverage: List<Float> = listOf(
         400f, 400f, 300f, 200f, 100f, 100f, 100f
-       // 500f, 390f, 380f, 320f, 100f
     ),
 ) {
     var labelX = 0f
@@ -193,7 +189,6 @@ fun CurvedChart(
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-          //  .padding(all = 0.dp)
     ){
         Canvas(
             modifier = modifier

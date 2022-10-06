@@ -6,6 +6,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.AccountBox
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Info
@@ -22,9 +24,9 @@ import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 @Composable
 fun DoneTasks() {
     val tasks = arrayOf(
-        arrayOf("Leetcode", "5 tasks"),
-        arrayOf("Laundry",  "3 tasks"),
-        arrayOf("Groceries",  "25 tasks"),
+        arrayOf("Shopping", "5 tasks"),
+        arrayOf("Résumé",  "3 tasks"),
+        arrayOf("Bills",  "25 tasks"),
     )
     val color_chips = arrayOf(
         0xFFFDC698,
@@ -32,10 +34,15 @@ fun DoneTasks() {
         0xFFF3FD7F
     )
     val compose_icons = arrayOf(
+
+
+        Icons.Default.ShoppingCart,
         Icons.Rounded.Menu,
         Icons.Rounded.Email,
         Icons.Rounded.AccountBox,
-        Icons.Rounded.Info
+        Icons.Rounded.Info,
+        Icons.Default.Person,
+
     )
     LazyColumn (modifier = Modifier
         .padding(top = 20.dp)
