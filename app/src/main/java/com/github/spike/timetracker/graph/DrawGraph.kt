@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +41,8 @@ fun DrawGraph(dailyData: Array<Int>) {
                     shape = roundedCornerShape
                 },
         ) {
+         //   val mainCurveColor = Color(0xFFFDC698)
+         //   val mainCurveColor = Color(0x99FDC698)
             val mainCurveColor = Color(0xFFFDC698)
             val mainCurveColorDarker = Color(0xFFEEBD94)
             val movingAverageCurveColor = Color.Black
@@ -116,47 +119,41 @@ fun DrawGraph(dailyData: Array<Int>) {
 }
 @Composable
 fun DailyRow(
-    modifier: Modifier = Modifier,
-    verticalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
-    horizontalArrangement: Arrangement.HorizontalOrVertical = Arrangement.SpaceEvenly
+    modifier: Modifier = Modifier
 ) {
     val spacerSize = 10.dp
     val buttonModifier = modifier.size(40.dp)
     val buttonBorder = BorderStroke(1.dp,Color.Gray)
     val spacerModifier = Modifier.size(spacerSize)
+    val days = arrayOf("Mo", "Tu", "We", "Th", "Fr")
+    val daySelected = 1
 
     Row() {
         Spacer(modifier = Modifier.size(80.dp))
-        Card(border= buttonBorder,
-            modifier = buttonModifier.align(Alignment.CenterVertically)
-            ) {
-            Text("  Mo")
+        for (i in days.indices) {
+            var textColor = Color.Black
+            var backColor = Color.White
+            if (i == daySelected) {
+                textColor = backColor.also {
+                    backColor = textColor
+                }
+            }
+            Card(border= buttonBorder,
+                modifier = buttonModifier,
+                backgroundColor = backColor,
+                contentColor = textColor
+            ){
+                Box(
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = days[i],
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            Spacer(modifier=spacerModifier)
         }
-        Spacer(modifier = spacerModifier)
-        Card(border= buttonBorder,
-            modifier = buttonModifier.align(Alignment.CenterVertically)
-        ) {
-            Text("  Tu")
-        }
-        Spacer(modifier = spacerModifier)
-        Card(border= buttonBorder,
-            modifier = buttonModifier.align(Alignment.CenterVertically)
-        ) {
-            Text("  We")
-        }
-        Spacer(modifier = spacerModifier)
-        Card(border= buttonBorder,
-            modifier = buttonModifier.align(Alignment.CenterVertically)
-        ) {
-            Text("  Th")
-        }
-        Spacer(modifier = spacerModifier)
-        Card(border= buttonBorder,
-            modifier = buttonModifier.align(Alignment.CenterVertically)
-        ) {
-            Text("  Fr")
-        }
-        Spacer(modifier = spacerModifier)
     }
 }
 @Preview(showBackground = true)
@@ -169,6 +166,7 @@ fun DefaultPreviewIndicator() {
             DrawGraph(dailyData)
             DailyRow()
             CurvedChart()
+            DailyRow()
         }
     }
 }
@@ -177,19 +175,23 @@ fun DefaultPreviewIndicator() {
 @Composable
 fun CurvedChart(
     modifier: Modifier = Modifier,
+    //(2, 2, 3, 2, 2, 4, 5)
     yPoints: List<Float> = listOf(
-        410f, 300f, 375f, 380f, 180f
+        200f, 200f, 300f, 200f, 200f, 400f, 500f
+        // 410f, 300f, 375f, 380f, 180f
     ),
     yPointsMovingAverage: List<Float> = listOf(
-        500f, 390f, 380f, 320f, 100f
+        200f, 200f, 300f, 200f, 400f, 200f, 100f
+       // 500f, 390f, 380f, 320f, 100f
     ),
 ) {
 
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(all = 16.dp)
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)
+          //  .padding(all = 0.dp)
     ){
 
         Canvas(
@@ -198,22 +200,17 @@ fun CurvedChart(
                 .height(200.dp)
         ) {
             val spacing = this.size.width / yPoints.size
+            val height = this.size.height
             val dayInterval = (size.width - spacing) / yPoints.size
-
             val normX = mutableListOf<Float>()
             val normY = mutableListOf<Float>()
 
             val strokePath = Path().apply {
-
                 for (i in yPoints.indices) {
-
                     val currentX = spacing + i * dayInterval
-
                     if (i == 0) {
-
                         moveTo(currentX, yPoints[i])
                     } else {
-
                         val previousX = spacing + (i - 1) * dayInterval
                         val conX1 = (previousX + currentX) / 2f
                         val conX2 = (previousX + currentX) / 2f
@@ -229,11 +226,19 @@ fun CurvedChart(
                             y3 = yPoints[i]
                         )
                     }
-
-                    // Circle dot points
-                    normX.add(currentX)
-                    normY.add(yPoints[i])
-
+                    val selected = 2
+                    if (i == selected) {
+                        normX.add(currentX)
+                        normY.add(yPoints[i])
+                        val intervals = floatArrayOf(20f, 30f)
+                        drawLine(
+                            color = Color.DarkGray,
+                            pathEffect= PathEffect.dashPathEffect(intervals, 4.dp.toPx()),
+                            start = Offset(currentX, 0f),
+                            end = Offset(currentX, height),
+                            strokeWidth= 1.dp.toPx()
+                        )
+                    }
                 }
             }
 
@@ -279,9 +284,10 @@ fun CurvedChart(
 
             drawPath(
                 path = strokePath,
-                color = Color(0xFFFDC698),
+                color = Color(0xB3FDC698),
+               // color = Color(0xFFFDC698),
                 style = Stroke(
-                    width = 3.dp.toPx(),
+                    width = 4.dp.toPx(),
                     cap = StrokeCap.Round
                 )
             )
