@@ -1,5 +1,4 @@
-package com.github.spike.timetracker
-
+package com.github.spike.timetracker.graphscreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,10 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
-import com.github.spike.timetracker.recentlycreatedsection.RecentlyCreatedSection
-import com.github.spike.timetracker.taskssection.MyTasksSection
 
-class MainActivity : ComponentActivity() {
+class GraphSection : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,7 +36,7 @@ fun ScaffoldLayout() {
         topBar = {
             TopAppBar(
                 title = {Text(
-                    "Task Manager",
+                    "Daily Tasks Done",
                     style = MaterialTheme.typography.h5,
                     color = Color.Black,
                 )},
@@ -49,8 +46,9 @@ fun ScaffoldLayout() {
         },
         content = {
             Column {
-                MyTasksSection()
-                RecentlyCreatedSection()
+                CurvedChart()
+                DailyRow()
+                DoneTasks()
             }
         },
         bottomBar = {
