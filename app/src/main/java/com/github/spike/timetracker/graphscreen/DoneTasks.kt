@@ -22,7 +22,7 @@ import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 
 
 @Composable
-fun DoneTasks() {
+fun DoneTasks(modifier: Modifier) {
     val tasks = arrayOf(
         arrayOf("Shopping", "5 tasks"),
         arrayOf("Résumé",  "3 tasks"),
@@ -44,7 +44,7 @@ fun DoneTasks() {
         Icons.Default.Person,
 
     )
-    LazyColumn (modifier = Modifier
+    LazyColumn (modifier = modifier
         .padding(top = 20.dp)
         .fillMaxWidth(),
         contentPadding= PaddingValues(bottom = 40.dp)
@@ -61,7 +61,7 @@ fun DoneTasks() {
         }
         items(3) { index ->
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .padding(
                         start = 16.dp,
                     )
@@ -70,7 +70,7 @@ fun DoneTasks() {
 
             ) {
                 Card(
-                    modifier = Modifier
+                    modifier = modifier
                         .size(40.dp)
                         .padding(start = 8.dp),
                     shape = RectangleShape,
@@ -88,10 +88,10 @@ fun DoneTasks() {
 
                 Text(text = tasks[index][0],
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(start=16.dp)
+                    modifier = modifier.padding(start=16.dp)
                 )
                 Spacer(
-                    modifier = Modifier
+                    modifier = modifier
                         .width(IntrinsicSize.Min)
                         .weight(.1f)
                 )
@@ -104,7 +104,7 @@ fun DoneTasks() {
 
             }
             Spacer(
-                modifier = Modifier.padding(
+                modifier = modifier.padding(
                     start = 28.dp,
                     end = 32.dp,
                     top = 8.dp,
@@ -120,6 +120,6 @@ fun DoneTasks() {
 @Composable
 fun DefaultPreviewTasks() {
     TimeTrackerTheme {
-        DoneTasks()
+        DoneTasks(Modifier)
     }
 }

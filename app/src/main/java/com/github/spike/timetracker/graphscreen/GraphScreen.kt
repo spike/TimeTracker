@@ -25,14 +25,14 @@ class GraphSection : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScaffoldLayout()
+                    ScaffoldLayout(Modifier)
                 }
             }
         }
     }
 }
 @Composable
-fun ScaffoldLayout() {
+fun ScaffoldLayout(modifier: Modifier) {
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Open))
     Scaffold(
         scaffoldState = scaffoldState,
@@ -43,7 +43,7 @@ fun ScaffoldLayout() {
                     style = MaterialTheme.typography.h5,
                     color = Color.Black,
                 )
-                    Spacer(modifier = Modifier.size(60.dp))
+                    Spacer(modifier = modifier.size(60.dp))
                     Text(
                         "5 OCT, 2022",
                         style = MaterialTheme.typography.h6,
@@ -57,7 +57,7 @@ fun ScaffoldLayout() {
             Column {
                 CurvedChart()
                 DailyRow()
-                DoneTasks()
+                DoneTasks(modifier)
             }
         },
         bottomBar = {
@@ -70,6 +70,6 @@ fun ScaffoldLayout() {
 @Composable
 fun DefaultPreview() {
     TimeTrackerTheme {
-        ScaffoldLayout()
+        ScaffoldLayout(Modifier)
     }
 }

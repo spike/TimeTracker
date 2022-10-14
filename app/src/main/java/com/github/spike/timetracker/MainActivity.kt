@@ -25,14 +25,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScaffoldLayout()
+                    ScaffoldLayout(Modifier)
                 }
             }
         }
     }
 }
 @Composable
-fun ScaffoldLayout() {
+fun ScaffoldLayout(modifier: Modifier) {
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Open))
     Scaffold(
         scaffoldState = scaffoldState,
@@ -49,8 +49,8 @@ fun ScaffoldLayout() {
         },
         content = {
             Column {
-                MyTasksSection()
-                RecentlyCreatedSection()
+                MyTasksSection(modifier)
+                RecentlyCreatedSection(modifier)
             }
         },
         bottomBar = {
@@ -63,6 +63,6 @@ fun ScaffoldLayout() {
 @Composable
 fun DefaultPreview() {
     TimeTrackerTheme {
-        ScaffoldLayout()
+        ScaffoldLayout(Modifier)
     }
 }

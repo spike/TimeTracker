@@ -32,10 +32,10 @@ val colors=arrayOf(0xFFFEEDDE, 0xFFE0F6FD, 0xFFF3FD7F)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RecentlyCreatedSection() {
+fun RecentlyCreatedSection(modifier: Modifier) {
     Column() {
         Row(
-            modifier = Modifier.padding(
+            modifier = modifier.padding(
                 start = 24.dp,
                 end = 32.dp
             )
@@ -46,12 +46,12 @@ fun RecentlyCreatedSection() {
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(
-                modifier = Modifier
+                modifier = modifier
                     .width(IntrinsicSize.Max)
                     .weight(1f)
             )
             Card(
-                modifier = Modifier.size(30.dp),
+                modifier = modifier.size(30.dp),
                 shape = CircleShape,
                 elevation = 0.dp,
                 onClick = {
@@ -70,7 +70,7 @@ fun RecentlyCreatedSection() {
             modifier = Modifier.padding(start = 8.dp)
         ) {
             items(4) { currentCount ->
-                RowItem(index = currentCount)
+                RowItem(index = currentCount, modifier)
             }
         }
     }
@@ -78,14 +78,14 @@ fun RecentlyCreatedSection() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RowItem(index: Int) {
+fun RowItem(index: Int, modifier: Modifier) {
     Row(
-        modifier = Modifier.size(200.dp),
+        modifier = modifier.size(200.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
         Card(
-            modifier = Modifier.size(180.dp),
+            modifier = modifier.size(180.dp),
             shape = RoundedCornerShape(8),
             elevation = 2.dp,
             backgroundColor = Color(colors[index]),
@@ -95,28 +95,28 @@ fun RowItem(index: Int) {
             ) {
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
-                modifier=Modifier.padding(start=20.dp, end=30.dp)
+                modifier=modifier.padding(start=20.dp, end=30.dp)
             ) {
                     Text(text = tasks[index],
                         style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(),
+                        modifier = modifier.padding(),
                     )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painterResource(R.drawable.ic_clock),
-                        modifier = Modifier.size(20.dp),
+                        modifier = modifier.size(20.dp),
                         contentDescription = "",
                     )
                     Text(
                         text = dates[index],
-                        modifier = Modifier.padding(start=8.dp),
+                        modifier = modifier.padding(start=8.dp),
                     )
                 }
                 Text(
                     text = priorities[index],
                     style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(),
+                    modifier = modifier.padding(),
                 )
             }
         }
@@ -126,7 +126,7 @@ fun RowItem(index: Int) {
 @Composable
 fun RecentlyCreatedSectionPreview() {
     TimeTrackerTheme {
-        RecentlyCreatedSection()
+        RecentlyCreatedSection(Modifier)
     }
 }
 

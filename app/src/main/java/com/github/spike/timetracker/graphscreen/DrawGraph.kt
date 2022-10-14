@@ -20,16 +20,16 @@ import androidx.compose.ui.unit.dp
 import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 
 @Composable
-fun DrawGraph(dailyData: Array<Int>) {
+fun DrawGraph(dailyData: Array<Int>, modifier: Modifier) {
     val roundedCornerShape = RoundedCornerShape(10.dp)
     Box(
-        modifier = Modifier
+        modifier = modifier
            // .background(Color.White)
             .padding(horizontal = 8.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
         Canvas(
-            modifier = Modifier
+            modifier = modifier
                 .padding(8.dp)
                 .height(280.dp)
                 .fillMaxWidth(1f)

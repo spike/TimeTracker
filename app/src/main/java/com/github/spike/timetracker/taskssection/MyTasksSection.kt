@@ -26,7 +26,7 @@ import com.github.spike.timetracker.ui.theme.TimeTrackerTheme
 
 
 @Composable
-fun MyTasksSection() {
+fun MyTasksSection(modifier: Modifier) {
     val tasks = arrayOf(
         arrayOf("To Do", "5 tasks"),
         arrayOf("In Progress",  "3 tasks"),
@@ -42,7 +42,7 @@ fun MyTasksSection() {
         R.drawable.ic_pending_clipboard,
         R.drawable.ic_check_mark_within_circle
     )
-    LazyColumn (modifier = Modifier
+    LazyColumn (modifier = modifier
         .padding(top = 20.dp)
         .fillMaxWidth(),
         contentPadding= PaddingValues(bottom = 40.dp)
@@ -51,7 +51,7 @@ fun MyTasksSection() {
             Text(
                 text = "My Tasks",
                 style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(
+                modifier = modifier.padding(
                     start = 30.dp,
                     top = 8.dp,
                     bottom = 20.dp),
@@ -59,7 +59,7 @@ fun MyTasksSection() {
         }
         items(3) { index ->
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .padding(
                         start = 16.dp,
                     )
@@ -68,7 +68,7 @@ fun MyTasksSection() {
 
             ) {
                 Card(
-                    modifier = Modifier
+                    modifier = modifier
                         .size(40.dp)
                         .padding(start = 8.dp),
                     shape = RectangleShape,
@@ -85,23 +85,23 @@ fun MyTasksSection() {
 
                 Text(text = tasks[index][0],
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.padding(start=16.dp)
+                    modifier = modifier.padding(start=16.dp)
                 )
                 Spacer(
-                    modifier = Modifier
+                    modifier = modifier
                         .width(IntrinsicSize.Min)
                         .weight(.1f)
                 )
                 Text(text = tasks[index][1],
                     fontFamily = FontFamily.Default,
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.width(100.dp)
+                    modifier = modifier.width(100.dp)
                 )
 
 
             }
             Spacer(
-                modifier = Modifier.padding(
+                modifier = modifier.padding(
                     start = 28.dp,
                     end = 32.dp,
                     top = 8.dp,
@@ -117,6 +117,6 @@ fun MyTasksSection() {
 @Composable
 fun DefaultPreviewTasks() {
     TimeTrackerTheme {
-        MyTasksSection()
+        MyTasksSection(Modifier)
     }
 }
